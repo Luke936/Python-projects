@@ -1,0 +1,70 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+#read csv to R
+#airplanemaster<-read.csv("C:\\Users\\lukek\\Desktop\\SQL\\huge datasets\\Airplanemaster.csv",header = TRUE,sep=',')
+#View(df)
+```
+```{r}
+#install necesary packages
+install.packages('RMariaDB')
+install.packages('sqldf')
+install.packages('RODBC')
+library('data.table')
+library('RMySQL')
+library('RMariaDB')
+library('sqldf')
+library('RODBC')
+```
+
+
+```{r}
+#set parameters
+db_user <- 'root'
+db_password <- 'Baconpizza2!'
+db_name <- 'dataworld'
+db_table <- 'weather'
+db_host <- 'localhost' # for local access
+db_port <- 3306
+
+#method 1
+conn <-  dbConnect(MySQL(), user = db_user, password = db_password,
+                 dbname = db_name, host = db_host, port = db_port, local_infile=T)
+print(conn)
+
+on.exit(dbDisconnect(conn))
+
+dbSendStatement(conn, "LOAD DATA local INFILE 'C:/Users/lukek/Desktop/SQL/huge datasets/Airplanemaster.csv' INTO TABLE airplane FIELDS TERMINATED BY ',' ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;" )
+
+getwd()
+
+
+dbClearResult()
+
+# method 2
+db<-odbcConnect("mysql")
+on.exit(odbcClose(db))
+print(db)
+
+
+example <- sqlQuery(db,"use dataworld;")
+```
+
+
+```{r}
+#Write dataframe to MySQL 
+# dbWriteTable(conn,"airplane", as.data.frame(airplanemaster), append=T,row.names=F)
+# colnames(airplanemaster)
+
+
+#write csv to MySQL
+
+
+
+
+```
+
