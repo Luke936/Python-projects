@@ -4,7 +4,7 @@ Created on Thu Apr  9 19:27:36 2020
 
 @author: lukek
 """
-
+#property of Luke Schabach
 
 import random
 import pandas as pd 
@@ -119,7 +119,7 @@ class poker:
 
 
 
-
+#The following code is used to find out what hand has been drawn for each player.
 
 def isroyalflush(frame):
     if not sum(frame['Suit'].value_counts()>=5) >=1: return('No') #check for 5 suits
